@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ILD Pilot — Check-in #1</title>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;700;800&family=Karla:ital,wght@0,300;0,400;0,500;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#050505;--accent:#A78BFA;--white:#F8FAFC;--body:rgba(248,250,252,.85);--muted:rgba(248,250,252,.65);--faint:rgba(248,250,252,.48);--card-bg:rgba(255,255,255,.03);--card-border:rgba(255,255,255,.07);--cyan:#22D3EE;--emerald:#10B981;--teal:#2DD4BF;--blue:#3B82F6;--indigo:#818CF8;--coral:#FB7185;--amber:#FBBF24}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--body);font-family:'Karla',sans-serif;font-size:1.1rem;line-height:1.6}
+body::before{content:'';position:fixed;top:0;left:0;width:200px;height:100%;background:linear-gradient(180deg,rgba(167,139,250,.22),rgba(129,140,248,.20),rgba(59,130,246,.18),rgba(56,189,248,.16),rgba(34,211,238,.18),rgba(16,185,129,.16),rgba(59,130,246,.18),rgba(129,140,248,.20),rgba(167,139,250,.22));mask:linear-gradient(90deg,rgba(0,0,0,.6),transparent);-webkit-mask:linear-gradient(90deg,rgba(0,0,0,.6),transparent);pointer-events:none;z-index:0}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:50px 80px;opacity:0;pointer-events:none;transition:opacity .4s;z-index:1}
+.slide.active{opacity:1;pointer-events:all}
+.si{max-width:960px;width:100%}
+.sl{font-family:'Albert Sans',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+.st{font-family:'Albert Sans',sans-serif;font-size:clamp(1.7rem,3.5vw,2.5rem);font-weight:800;color:var(--white);margin-bottom:16px}
+.ss{color:var(--muted);font-size:1.02rem;margin-bottom:24px;max-width:720px}
+.sr{display:grid;gap:14px;margin-bottom:28px}
+.sc{background:var(--card-bg);border:1px solid var(--card-border);border-radius:2px;padding:18px 14px;text-align:center}
+.sn{font-family:'Albert Sans',sans-serif;font-size:2.4rem;font-weight:800;line-height:1;margin-bottom:3px}
+.sl2{font-family:'Albert Sans',sans-serif;font-size:.8rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.sn.purple{background:linear-gradient(180deg,#8B5CF6,#E9D5FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sn.cyan{background:linear-gradient(180deg,#06B6D4,#A5F3FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sn.emerald{background:linear-gradient(180deg,#10B981,#6EE7B7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sn.blue{background:linear-gradient(180deg,#3B82F6,#93C5FD);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.badge{display:inline-block;font-family:'Albert Sans',sans-serif;font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:5px 13px;border-radius:2px;margin:3px}
+.co{background:rgba(167,139,250,.04);border:1px solid rgba(167,139,250,.15);border-left:3px solid var(--accent);border-radius:2px;padding:16px 20px;margin:16px 0;font-size:.95rem;color:var(--muted);line-height:1.65}
+.co strong{color:var(--white)}
+.co.tl{background:rgba(45,212,191,.04);border-color:rgba(45,212,191,.15);border-left-color:var(--teal)}
+.co.cn{background:rgba(34,211,238,.04);border-color:rgba(34,211,238,.15);border-left-color:var(--cyan)}
+.ph{font-family:'Albert Sans',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--phase-color);padding:12px 0 5px;border-bottom:1px solid rgba(255,255,255,.05);margin-bottom:2px}
+.pr{display:grid;grid-template-columns:210px 1fr 28px;gap:8px;align-items:center;padding:4px 0}
+.pr.dim{opacity:1}
+.pr.dim .pbl{color:rgba(248,250,252,.5)}
+.pr.dim .pn{color:rgba(248,250,252,.45)}
+.pr.dim .pbc{color:rgba(248,250,252,.45)}
+.pbl{font-family:'Albert Sans',sans-serif;font-size:.82rem;font-weight:500;color:var(--body);display:flex;align-items:center;gap:5px}
+.pn{font-weight:800;font-size:.85rem;min-width:18px;color:var(--faint)}
+.pbt{height:16px;background:rgba(255,255,255,.03);border-radius:2px;overflow:hidden}
+.pbf{height:100%;border-radius:2px}
+.pbc{font-family:'Albert Sans',sans-serif;font-size:.9rem;font-weight:800;text-align:right;color:var(--faint)}
+.cc{background:var(--card-bg);border:1px solid var(--card-border);border-radius:2px;padding:18px 20px;border-left:3px solid var(--card-border);margin-bottom:10px}
+.ccl{font-family:'Albert Sans',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.cct{font-size:.95rem;color:var(--muted);line-height:1.6}
+.cct strong{color:var(--white);font-weight:600}
+.er{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.erl{font-family:'Albert Sans',sans-serif;font-size:.88rem;font-weight:700;color:var(--white);white-space:nowrap;padding-top:2px}
+.erd{font-size:.95rem;color:var(--muted)}
+.dc{background:var(--card-bg);border:1px solid var(--card-border);border-radius:2px;padding:20px;text-align:center}
+.dr{font-family:'Albert Sans',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:4px}
+.dt{font-family:'Albert Sans',sans-serif;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.dd{font-size:.9rem;color:var(--muted);line-height:1.55}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cgc{background:var(--card-bg);border:1px solid var(--card-border);border-radius:2px;padding:16px;border-top:3px solid var(--card-border)}
+.cgt{font-family:'Albert Sans',sans-serif;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.cgf{font-size:.9rem;color:var(--muted);line-height:1.55}
+.cgf strong{color:var(--white);font-weight:600}
+.pi{background:var(--card-bg);border:1px solid var(--card-border);border-radius:2px;padding:13px 16px;margin-bottom:5px;display:grid;grid-template-columns:76px 1fr auto;gap:10px;align-items:center}
+.pw{font-family:'Albert Sans',sans-serif;font-weight:700;color:var(--white);font-size:.92rem}
+.px{font-size:.85rem;color:var(--muted)}
+.pt{font-family:'Albert Sans',sans-serif;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 8px;border-radius:2px;white-space:nowrap}
+.pe{background:rgba(251,113,133,.1);color:var(--coral);border:1px solid rgba(251,113,133,.2)}
+.pc{background:rgba(45,212,191,.1);color:var(--teal);border:1px solid rgba(45,212,191,.2)}
+.dl{list-style:none;counter-reset:d}
+.dl li{counter-increment:d;padding:11px 0 11px 40px;border-bottom:1px solid var(--card-border);position:relative;font-size:.95rem;color:var(--muted)}
+.dl li::before{content:counter(d);position:absolute;left:0;top:11px;font-family:'Albert Sans',sans-serif;font-size:1.2rem;font-weight:800;color:var(--accent);opacity:.7}
+.nav{position:fixed;bottom:20px;right:36px;display:flex;gap:8px;z-index:10}
+.nav button{background:var(--card-bg);border:1px solid var(--card-border);border-radius:2px;color:var(--muted);font-family:'Albert Sans',sans-serif;font-size:.78rem;font-weight:700;padding:7px 14px;cursor:pointer;transition:all .2s}
+.nav button:hover{background:rgba(255,255,255,.08);color:var(--white)}
+#c{position:fixed;bottom:24px;left:36px;z-index:10;font-family:'Albert Sans',sans-serif;font-size:.75rem;color:var(--faint);font-weight:500}
+.fl{position:fixed;bottom:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(167,139,250,.2),transparent);z-index:10}
+</style>
+</head>
+<body>
+
+<div class="slide active" data-slide="0">
+<div class="si" style="text-align:center">
+  <div class="sl" style="color:var(--accent)">ILD Framework Pilot</div>
+  <div class="st" style="font-size:clamp(2rem,4.5vw,3.2rem);margin-bottom:14px">Check-in #1</div>
+  <p style="color:var(--muted);font-size:1.05rem;margin-bottom:36px">First Two Weeks | April 10 - 24, 2026</p>
+  <div class="sr" style="grid-template-columns:repeat(4,1fr);max-width:680px;margin:0 auto">
+    <div class="sc"><div class="sn purple">13</div><div class="sl2">Session Logs</div></div>
+    <div class="sc"><div class="sn cyan">5/6</div><div class="sl2">Participants</div></div>
+    <div class="sc"><div class="sn emerald">~467</div><div class="sl2">Messages</div></div>
+    <div class="sc"><div class="sn blue">17/21</div><div class="sl2">Principles</div></div>
+  </div>
+</div>
+</div>
+
+<div class="slide" data-slide="1">
+<div class="si">
+  <div class="sl" style="color:var(--accent)">The Big Picture</div>
+  <div class="st">How You're Using It</div>
+  <div class="ss">Both modes are seeing real use across a wide range of course types and workflow stages.</div>
+  <div class="sr" style="grid-template-columns:repeat(3,1fr);max-width:420px;margin-bottom:20px">
+    <div class="sc"><div class="sn" style="font-size:1.6rem;background:linear-gradient(180deg,#10B981,#6EE7B7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">7</div><div class="sl2">Both Modes</div></div>
+    <div class="sc"><div class="sn" style="font-size:1.6rem;background:linear-gradient(180deg,#10B981,#6EE7B7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">4</div><div class="sl2">QA Only</div></div>
+    <div class="sc"><div class="sn" style="font-size:1.6rem;background:linear-gradient(180deg,#22D3EE,#A5F3FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">2</div><div class="sl2">DP Only</div></div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px">
+    <span class="badge" style="background:rgba(167,139,250,.1);color:var(--accent);border:1px solid rgba(167,139,250,.2)">Full course QA audits</span>
+    <span class="badge" style="background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.2)">Deep design builds</span>
+    <span class="badge" style="background:rgba(16,185,129,.1);color:var(--emerald);border:1px solid rgba(16,185,129,.2)">Pre-blueprint reviews</span>
+    <span class="badge" style="background:rgba(251,191,36,.1);color:var(--amber);border:1px solid rgba(251,191,36,.2)">Dual-platform assessment</span>
+    <span class="badge" style="background:rgba(251,113,133,.1);color:var(--coral);border:1px solid rgba(251,113,133,.2)">Pre-college population</span>
+    <span class="badge" style="background:rgba(45,212,191,.1);color:var(--teal);border:1px solid rgba(45,212,191,.2)">Full module builds</span>
+    <span class="badge" style="background:rgba(59,130,246,.1);color:var(--blue);border:1px solid rgba(59,130,246,.2)">Cross-course rubric work</span>
+  </div>
+  <div class="co"><strong>Framework vocabulary is showing up in your language.</strong> Principles like Learner Reality Test and Clerical vs. Creative are being referenced by name in design decisions. The framework language is entering how you as designers talk about your work, not just how the tool talks to you.</div>
+</div>
+</div>
+
+<div class="slide" data-slide="2">
+<div class="si">
+  <div class="sl" style="color:var(--teal)">Real Impact</div>
+  <div class="st">What the Tools Actually Caught</div>
+  <div class="ss">Moments where the framework changed what got built, flagged something that would have shipped, or surfaced a problem before it became a revision cycle.</div>
+  <div class="cc" style="border-left-color:var(--coral)"><div class="ccl" style="color:var(--coral)">Assessment misalignment</div><div class="cct"><strong>11 of 19 quiz questions</strong> were assessing Module 3 content instead of Module 2. MLOs 1-3 had zero assessment coverage. Caught during a design partner session, not QA.</div></div>
+  <div class="cc" style="border-left-color:var(--amber)"><div class="ccl" style="color:var(--amber)">Workload risk</div><div class="cct">Module 14 flagged with <strong>585 minutes of reading</strong> and no individual formative check. Strong course architecture undermined by unsustainable load in the final stretch.</div></div>
+  <div class="cc" style="border-left-color:var(--cyan)"><div class="ccl" style="color:var(--cyan)">Recurring pattern across courses</div><div class="cct">Two unrelated courses independently flagged the same gap: <strong>no low-stakes practice before graded work</strong>. The framework helped catch it consistently across different contexts.</div></div>
+  <div class="cc" style="border-left-color:var(--emerald)"><div class="ccl" style="color:var(--emerald)">Pre-launch blocker</div><div class="cct">Incomplete Course Alignment Table and broken Module 14 learning objective identified as <strong>blockers before launch</strong>, not after.</div></div>
+  <div class="co tl"><strong>Takeaway:</strong> The framework is catching design-level issues that compliance checklists don't reach. Assessment misalignment, workload imbalance, missing practice opportunities, and cross-course patterns are all surfacing before they become revision cycles.</div>
+</div>
+</div>
+
+<div class="slide" data-slide="3">
+<div class="si">
+  <div class="sl" style="color:var(--cyan)">Workflow</div>
+  <div class="st">Where Are You Entering?</div>
+  <div class="ss">The data shows you using the tools at very different points in the design process.</div>
+  <div class="er"><div class="erl" style="color:var(--cyan)">Course outline stage</div><div class="erd">Before blueprinting. Assessing the outline for structural issues, Bloom's alignment, and sequencing before any content gets built.</div></div>
+  <div class="er"><div class="erl" style="color:var(--emerald)">Mid-build design</div><div class="erd">Active development. Using the Design Partner as a real-time collaborator while building pages, activities, and assessments.</div></div>
+  <div class="er"><div class="erl" style="color:var(--teal)">Post-build QA</div><div class="erd">Module or course is built. Running a QA audit for both compliance and design quality before submission.</div></div>
+  <div class="er"><div class="erl" style="color:var(--blue)">Rubric and assessment work</div><div class="erd">Focused work on grading criteria, rubric language, and assessment-objective alignment outside of a full module build.</div></div>
+  <div class="er" style="border-bottom:none"><div class="erl" style="color:var(--indigo)">Course alignment audit</div><div class="erd">Zooming out across an entire course to check MLO mapping, module sequencing, and cross-module threading.</div></div>
+  <div class="co tl" style="margin-top:16px"><strong>Discussion:</strong> Where in your process has this been most useful? Is there a point where you wish you'd used it earlier, or where it felt like the wrong time?</div>
+</div>
+</div>
+
+<div class="slide" data-slide="4">
+<div class="si">
+  <div class="sl" style="color:var(--emerald)">Session Depth</div>
+  <div class="st">Not All Sessions Are the Same</div>
+  <div class="ss">The range of session lengths isn't random. Different depths produce different kinds of value.</div>
+  <div class="sr" style="grid-template-columns:1fr 1fr 1fr;gap:16px">
+    <div class="dc" style="border-top:3px solid var(--emerald)"><div class="dr" style="color:var(--emerald)">5-14</div><div class="dt" style="color:var(--emerald)">Quick checks</div><div class="dd">Focused QA audits, single-module reviews, rubric checks. Compliance read and headline design findings fast.</div></div>
+    <div class="dc" style="border-top:3px solid var(--blue)"><div class="dr" style="color:var(--blue)">24-60</div><div class="dt" style="color:var(--blue)">Working sessions</div><div class="dd">QA plus design partner follow-up. Audit surfaces issues, then you work through solutions in the same conversation.</div></div>
+    <div class="dc" style="border-top:3px solid var(--accent)"><div class="dr" style="color:var(--accent)">100-120</div><div class="dt" style="color:var(--accent)">Deep builds</div><div class="dd">Full module construction. Built artifacts, restructured content, new assessments. Framework as real-time design collaborator.</div></div>
+  </div>
+  <div class="co cn" style="margin-top:12px"><strong>Discussion:</strong> Which depth feels most valuable for your workflow? Are the quick checks worth doing on their own, or does the real value come from longer sessions?</div>
+</div>
+</div>
+
+<div class="slide" data-slide="5">
+<div class="si">
+  <div class="sl" style="color:var(--cyan)">Principle Coverage</div>
+  <div class="st">21 Principles, 13 Sessions</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 36px">
+    <div>
+      <div class="ph" style="--phase-color:var(--cyan)">Phase 1: Planning</div>
+      <div class="pr"><div class="pbl"><span class="pn" style="color:var(--cyan)">3</span>Start with the end</div><div class="pbt"><div class="pbf" style="width:77%;background:var(--cyan)"></div></div><div class="pbc" style="color:var(--cyan)">10</div></div>
+      <div class="pr"><div class="pbl"><span class="pn" style="color:var(--cyan)">4</span>Minimum effective</div><div class="pbt"><div class="pbf" style="width:46%;background:var(--cyan);opacity:.6"></div></div><div class="pbc" style="color:var(--cyan);opacity:.7">6</div></div>
+      <div class="pr dim"><div class="pbl"><span class="pn">1</span>Confirm training</div><div class="pbt"><div class="pbf" style="width:0%"></div></div><div class="pbc">0</div></div>
+      <div class="pr dim"><div class="pbl"><span class="pn">2</span>Know your learners</div><div class="pbt"><div class="pbf" style="width:0%"></div></div><div class="pbc">0</div></div>
+      <div class="ph" style="--phase-color:var(--emerald)">Phase 2: Structure</div>
+      <div class="pr"><div class="pbl"><span class="pn" style="color:var(--emerald)">5</span>Match cognitive level</div><div class="pbt"><div class="pbf" style="width:85%;background:var(--emerald)"></div></div><div class="pbc" style="color:var(--emerald)">11</div></div>
+      <div class="pr"><div class="pbl"><span class="pn" style="color:var(--emerald)">7</span>Real-world problems</div><div class="pbt"><div class="pbf" style="width:77%;background:var(--emerald)"></div></div><div class="pbc" style="color:var(--emerald)">10</div></div>
+      <div class="pr"><div class="pbl"><span class="pn" style="color:var(--emerald)">9</span>Motivation sustained</div><div class="pbt"><div class="pbf" style="width:54%;background:var(--emerald);opacity:.6"></div></div><div class="pbc" style="color:var(--emerald);opacity:.7">7</div></div>
+      <div class="pr"><div class="pbl"><span class="pn" style="color:var(--emerald)">8</span>Multiple pathways</div><div class="pbt"><div class="pbf" style="width:38%;background:var(--emerald);opacity:.5"></div></div><div class="pbc" style="color:var(--emerald);opacity:.6">5</div></div>
+      <div class="pr dim"><div class="pbl"><span class="pn">6</span>Activate prior knowledge</div><div class="pbt"><div class="pbf" style="width:15%;background:var(--emerald);opacity:.3"></div></div><div class="pbc">2</div></div>
+    </div>
+    <div>
+      <div class="ph" style="--phase-color:var(--teal)">Phase 3: Experience</div>
+      <div class="pr"><div class="pbl"><span class="pn" style="color:var(--teal)">14</span>Practice w/ feedback</div><div class="pbt"><div class="pbf" style="width:77%;background:var(--teal)"></div></div><div class="pbc" style="color:var(--teal)">10</div></div>
+      <div class="pr"><div class="pbl"><span class="pn" style="color:var(--teal)">11</span>Simple to complex</div><div class="pbt"><div class="pbf" style="width:69%;background:var(--teal)"></div></div><div class="pbc" style="color:var(--teal)">9</div></div>
+      <div class="pr"><div class="pbl"><span class="pn" style="color:var(--teal)">12</span>Chunk and pace</div><div class="pbt"><div class="pbf" style="width:62%;background:var(--teal);opacity:.7"></div></div><div class="pbc" style="color:var(--teal);opacity:.8">8</div></div>
+      <div class="pr"><div class="pbl"><span class="pn" style="color:var(--teal)">13</span>Practice before perf.</div><div class="pbt"><div class="pbf" style="width:54%;background:var(--teal);opacity:.6"></div></div><div class="pbc" style="color:var(--teal);opacity:.7">7</div></div>
+      <div class="pr dim"><div class="pbl"><span class="pn">10</span>Community</div><div class="pbt"><div class="pbf" style="width:8%;background:var(--teal);opacity:.3"></div></div><div class="pbc">1</div></div>
+      <div class="pr dim"><div class="pbl"><span class="pn">15</span>Conversational tone</div><div class="pbt"><div class="pbf" style="width:8%;background:var(--teal);opacity:.3"></div></div><div class="pbc">1</div></div>
+      <div class="ph" style="--phase-color:var(--blue)">Phase 4: Formatting</div>
+      <div class="pr dim"><div class="pbl"><span class="pn">16</span>Remove decorative</div><div class="pbt"><div class="pbf" style="width:8%;background:var(--blue);opacity:.3"></div></div><div class="pbc">1</div></div>
+      <div class="pr dim"><div class="pbl"><span class="pn">17</span>Related together</div><div class="pbt"><div class="pbf" style="width:8%;background:var(--blue);opacity:.3"></div></div><div class="pbc">1</div></div>
+      <div class="pr dim"><div class="pbl"><span class="pn">18</span>Navigation</div><div class="pbt"><div class="pbf" style="width:0%"></div></div><div class="pbc">0</div></div>
+      <div class="ph" style="--phase-color:var(--indigo)">Phase 5: Review</div>
+      <div class="pr"><div class="pbl"><span class="pn" style="color:var(--indigo)">21</span>Learner Reality Test</div><div class="pbt"><div class="pbf" style="width:85%;background:var(--indigo)"></div></div><div class="pbc" style="color:var(--indigo)">11</div></div>
+      <div class="pr"><div class="pbl"><span class="pn" style="color:var(--indigo)">19</span>Assessment alignment</div><div class="pbt"><div class="pbf" style="width:77%;background:var(--indigo)"></div></div><div class="pbc" style="color:var(--indigo)">10</div></div>
+      <div class="pr dim"><div class="pbl"><span class="pn">20</span>Accessibility</div><div class="pbt"><div class="pbf" style="width:8%;background:var(--indigo);opacity:.3"></div></div><div class="pbc">1</div></div>
+    </div>
+  </div>
+  <div class="co" style="margin-top:12px"><strong>Takeaway:</strong> Structure, Experience, and Review principles are getting heavy use. Planning principles (P1, P2) likely don't surface because planning has already happened by the time you use the tools. Formatting principles (P15-P18) are the open question.</div>
+</div>
+</div>
+
+<div class="slide" data-slide="6">
+<div class="si">
+  <div class="sl" style="color:var(--emerald)">Your Pushback</div>
+  <div class="st">8 Instances, 0 Principle Rejections</div>
+  <div class="co" style="margin-bottom:14px"><strong>Every pushback has been "you're missing context," not "this principle is wrong."</strong> You're engaging critically with the tool and correcting it when it gets things wrong.</div>
+  <div class="pi"><div class="pw">Brian</div><div class="px">Module 3 flagged as missing when fully built</div><div class="pt pe">Error</div></div>
+  <div class="pi"><div class="pw">Jackie</div><div class="px">Workload based on misread data (full course vs. MOOC times)</div><div class="pt pe">Error</div></div>
+  <div class="pi"><div class="pw">Tiffani</div><div class="px">Module 2 content claim incorrect, verified against Canvas</div><div class="pt pe">Error</div></div>
+  <div class="pi"><div class="pw">Alyssa</div><div class="px">CYK flagged but was intentional two-tier structure</div><div class="pt pc">Context</div></div>
+  <div class="pi"><div class="pw">Jackie</div><div class="px">Active Learning handled by live Classroom Connect sessions</div><div class="pt pc">Context</div></div>
+  <div class="pi"><div class="pw">Jackie</div><div class="px">Three flags resolved by course context (ungraded, intentional splits)</div><div class="pt pc">Context</div></div>
+  <div class="pi"><div class="pw">Tiffani</div><div class="px">Engineering context, assessment, and active learning flags</div><div class="pt pc">Context</div></div>
+  <div class="pi"><div class="pw">Tiffani</div><div class="px">Alignment urgency reframed by course sequencing</div><div class="pt pc">Context</div></div>
+  <div class="co" style="margin-top:14px"><strong>Discussion:</strong> When the tool got something wrong, how did that feel? Did it shake your confidence in the rest of the output, or was it easy to move past? What would make the errors less disruptive?</div>
+</div>
+</div>
+
+<div class="slide" data-slide="7">
+<div class="si">
+  <div class="sl" style="color:var(--teal)">What the Framework Surfaces</div>
+  <div class="st">Different Contexts, Different Findings</div>
+  <div class="cg">
+    <div class="cgc" style="border-top-color:var(--coral)"><div class="cgt" style="color:var(--coral)">Pre-college learners</div><div class="cgf">One course serves ages 13-18 with no instructor and no peer interaction. The framework flagged that <strong>practice with feedback (P14) and the Learner Reality Test (P21) carry more weight</strong> in this context because self-assessment is the only feedback mechanism available to students.</div></div>
+    <div class="cgc" style="border-top-color:var(--amber)"><div class="cgt" style="color:var(--amber)">Dual-platform courses</div><div class="cgf">Courses built across Coursera and Canvas surfaced <strong>platform dependency risks</strong>: interactive elements (H5P, Genially) may not work on both platforms, and discussion structures designed for the full credit version don't translate to the MOOC without redesign. The framework caught these before the build phase.</div></div>
+    <div class="cgc" style="border-top-color:var(--cyan)"><div class="cgt" style="color:var(--cyan)">Deep design builds</div><div class="cgf">Sessions over 100 messages produced tangible outputs: <strong>18 Canvas pages built, 12 new quiz questions written, content restructured across modules</strong>. In these longer sessions the framework functioned as a real-time design collaborator, not just a reviewer checking boxes after the fact.</div></div>
+    <div class="cgc" style="border-top-color:var(--indigo)"><div class="cgt" style="color:var(--indigo)">Pre-blueprint stage</div><div class="cgf">When the framework was used at the course outline stage before blueprinting, <strong>it flagged structural issues like Bloom's misalignment and sequencing gaps early enough to fix them before content gets built</strong>. Several flags were resolved by context the designer provided, showing the tool adapts when given more information.</div></div>
+    <div class="cgc" style="border-top-color:var(--accent)"><div class="cgt" style="color:var(--accent)">Institutional complexity</div><div class="cgf">One course had undefined admissions processes, contradictory instructions from faculty and administration, and unresolved program governance. The framework <strong>surfaced these as risks and recommended documentation for the designer's protection</strong>, going beyond course design into professional practice support.</div></div>
+    <div class="cgc" style="border-top-color:var(--emerald)"><div class="cgt" style="color:var(--emerald)">Cross-course patterns</div><div class="cgf">Two designers working on completely unrelated courses both had the same gap flagged: <strong>no low-stakes practice opportunity before graded work</strong>. The framework surfaced this independently in both cases, making a shared pattern visible across the team.</div></div>
+  </div>
+  <div class="co" style="margin-top:14px"><strong>Takeaway:</strong> The framework adapts to context rather than applying one-size-fits-all. The same 21 principles surface different findings depending on learner population, platform, course stage, and institutional constraints.</div>
+</div>
+</div>
+
+<div class="slide" data-slide="8">
+<div class="si">
+  <div class="sl" style="color:var(--indigo)">For Discussion</div>
+  <div class="st">Open Questions</div>
+  <ol class="dl">
+    <li>If you haven't logged yet, what's getting in the way? Setup issues, no course to try it on, or just haven't gotten to it?</li>
+    <li>How is the logging process itself working for you? Is copy-pasting the session log into Slack easy enough, or is there friction in getting the log generated or posted?</li>
+    <li>Where in your process has this been most useful? Where did it feel like the wrong time?</li>
+    <li>Which session depth feels most valuable: quick QA checks, working sessions, or deep builds?</li>
+    <li>Some of you are referencing principles by name. Is the vocabulary changing how you think about design decisions?</li>
+    <li>Formatting Design principles (P15-P18) are barely showing up. Not where you're stuck, or is the tool not surfacing them?</li>
+    <li>Three auditor errors in 13 logs. How do we reduce false positives without losing thoroughness?</li>
+    <li>What's been the most useful moment so far? What felt like a waste of time?</li>
+  </ol>
+  <div style="text-align:center;margin-top:24px;padding-top:16px;border-top:1px solid var(--card-border)">
+    <div style="font-family:'Albert Sans',sans-serif;font-size:.75rem;color:var(--faint);font-weight:500">ILD Framework Pilot | Phase 1 Check-in #1 | Created by Neeve MacGregor</div>
+    <div style="font-size:.68rem;color:var(--faint);margin-top:3px">&#169; 2026 Neeve MacGregor. Integrated Learning Design (ILD) Framework. All rights reserved.</div>
+  </div>
+</div>
+</div>
+
+<div class="nav"><button onclick="prev()">&#8592; Back</button><button onclick="next()">Next &#8594;</button></div>
+<div id="c">1 / 9</div>
+<div class="fl"></div>
+<script>
+let cur=0;const sl=document.querySelectorAll('.slide'),tot=sl.length;
+function show(n){sl.forEach(s=>s.classList.remove('active'));sl[n].classList.add('active');document.getElementById('c').textContent=(n+1)+' / '+tot}
+function next(){if(cur<tot-1){cur++;show(cur)}}function prev(){if(cur>0){cur--;show(cur)}}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')next();if(e.key==='ArrowLeft')prev()});
+</script>
+</body>
+</html>
